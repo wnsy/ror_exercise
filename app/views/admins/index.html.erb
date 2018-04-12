@@ -1,0 +1,42 @@
+<h1>Admins page</h1>
+
+<% if admin_signed_in? %>
+<p>Admin signed in as... <%= current_admin.email %>. Not you?
+	<%= link_to "Sign out", destroy_admin_session_path, method: :delete %>
+</p>
+<% end %>
+
+<p>TODO:<br />
+	- See all stock lists <br />
+	- View a list of all users (admins, business users)<br />
+	- create new users<br />
+</p>
+
+<h1>List of admin users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+	<% @admins.each do |admin| %>
+	  <tr>
+	    <td><%= admin.email %></td>
+	    <td><%= link_to 'Show', admin %></td>
+	    <td><%= link_to 'Edit', edit_admin_path(admin) %></td>
+	    <td><%= link_to 'Destroy', admin, method: :delete,
+	                                     data: { confirm: 'Are you sure?' } %></td>
+	  </tr>
+	<% end %>
+</table>
+
+
+
+<br>
+
+<%= link_to 'New Admin', new_admin_path %>
+
+<%= link_to 'New User', new_business_path %>
