@@ -11,7 +11,7 @@ module Accessible
       redirect_to(new_admin_session_path) && return
     elsif current_business
       flash.clear
-			redirect_to(new_business_session_path) && return
+      redirect_to(new_business_session_path) && return
     end
   end
 end
