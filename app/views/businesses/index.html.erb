@@ -6,4 +6,12 @@
 </p>
 <% end %>
 
-TODO: Show a stock lists (users can CRUD)
+
+
+<div class="form-group">
+	<%= form_tag businesses_path, :method => 'POST' do %>
+	<%= text_field_tag 'id', nil,
+	placeholder: 'Enter company ticker symbol', size: 50 %>
+	<%= submit_tag 'Lookup Stock Price', class: 'btn btn-default' %>
+</div>
+<% end %>

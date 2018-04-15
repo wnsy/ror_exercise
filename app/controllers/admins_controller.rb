@@ -9,6 +9,7 @@ class AdminsController < ApplicationController
 	end
 
 	def new
+		@admins = Admin.new
 	end
 
 	def show
