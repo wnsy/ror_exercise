@@ -3,20 +3,27 @@ class BusinessesController < ApplicationController
 	before_action :authenticate_business!
 
 	def index
-		@businesses = Business.all
-		#this should show a stock list (named list of stock tickers)
+		@businesses = Business.all #delete later / @todo: associate with admin model to show all users?
+		#@todo: put in a list
+		encoded_url = URI.encode('https://api.iextrading.com/1.0/stock/{@stock}/price') #{@stock}/price')
+		if params[:id] == ''
+			@empty = 'Must enter a symbol'
+		elsif
+			if params[:id]
+				@stock = parse_uri(open(URI.parse(encoded_url)).read)
+			end
+		end
 	end
 
 	def create
 		#create a stock list (named list)
+		#puts "The Apple stock price is #{open(URI.parse(encoded_url)).read}$USD"
 	end
 
 	def new
-		puts "The Apple stock price is #{open('https://api.iextrading.com/1.0/stock/AAPL/price').read}$USD"
 	end
 
 	def show
-
 	end
 
 	def update

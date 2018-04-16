@@ -1,17 +1,21 @@
-<h1>User profile</h1>
-
 <% if business_signed_in? %>
-<p>User signed in as... <%= current_business.email %>. Not you?
-	<%= link_to "Sign out", destroy_business_session_path, method: :delete %>
-</p>
+User <%= current_business.email %>.
+<%= link_to "Sign out", destroy_business_session_path, method: :delete %>
 <% end %>
 
-
+<h1>User profile</h1>
 
 <div class="form-group">
-	<%= form_tag businesses_path, :method => 'POST' do %>
+	<%= form_tag businesses_path, :method => 'GET' do %>
 	<%= text_field_tag 'id', nil,
 	placeholder: 'Enter company ticker symbol', size: 50 %>
 	<%= submit_tag 'Lookup Stock Price', class: 'btn btn-default' %>
 </div>
+<% end %>
+
+<% if @stock %>
+ <%= @stock %>
+<% elsif @empty %>
+<%= @empty %>
+
 <% end %>
