@@ -13,9 +13,14 @@ User <%= current_business.email %>.
 </div>
 <% end %>
 
+<!-- Display stock price -->
 <% if @stock %>
- <%= @stock %>
+  <%= @stock %>
 <% elsif @empty %>
-<%= @empty %>
+  <%= @empty %>
+<% end %>
 
+<!-- Error handling if stock price doesn't exist  -->
+<% if @error %>
+  <%= @error %>
 <% end %>

@@ -5,12 +5,18 @@ class BusinessesController < ApplicationController
 	def index
 		@businesses = Business.all #delete later / @todo: associate with admin model to show all users?
 		#@todo: put in a list
-		encoded_url = URI.encode('https://api.iextrading.com/1.0/stock/{@stock}/price') #{@stock}/price')
+		encoded_url = URI.encode("https://api.iextrading.com/1.0/stock/#{params[:id]}/price") #{@stock}/price")
 		if params[:id] == ''
-			@empty = 'Must enter a symbol'
+			@empty = 'Must enter a symbol.'
 		elsif
+
 			if params[:id]
-				@stock = parse_uri(open(URI.parse(encoded_url)).read)
+				begin
+					@stock = parse_uri(open(URI.parse(encoded_url)).read)
+				rescue StandardError
+					@error = "The stock symbol doesn't exist."
+				end
+
 			end
 		end
 	end
