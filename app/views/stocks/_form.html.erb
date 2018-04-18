@@ -18,8 +18,7 @@
   </div>
 
   <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_, id: :stock_ticker %>
+    <%= form.text_field :user_id, value: current_business.id, type: :hidden %>
   </div>
 
   <div class="actions">

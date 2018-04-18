@@ -65,8 +65,8 @@ class StocksController < ApplicationController
 
 
   def correct_user
-   @ticker = current_business.stocks.find_by(id: params[:id])
-   redirect_to stocks_path, notice: "You're not authorised to view/edit this page." if @stock.nil?
+    @ticker = Stock.find_by(id: params[:id])
+      redirect_to stocks_path, notice: 'You  not authorised to view/edit this page.' if @ticker.nil?
   end
 
   private
