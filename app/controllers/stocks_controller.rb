@@ -2,11 +2,25 @@ class StocksController < ApplicationController
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :authenticate_business!
+  require 'open-uri'
+
 
   # GET /stocks
   # GET /stocks.json
   def index
     @stocks = Stock.all
+    encoded_url = URI.encode("https://api.iextrading.com/1.0/stock/#{params[:id]}/price")
+    if params[:id] == ''
+      @empty = 'Must enter a symbol.'
+    elsif
+      if params[:id]
+        begin
+          @stock = parse_uri(open(URI.parse(encoded_url)).read)
+        rescue StandardError
+          @error = "The stock symbol doesn't exist."
+        end
+      end
+    end
   end
 
   # GET /stocks/1
@@ -30,6 +44,9 @@ class StocksController < ApplicationController
 
     respond_to do |format|
       if @stock.save
+        new_price = Stock.find_by(params(:price))
+        new_price.update(price: @stock)
+
         format.html { redirect_to @stock, notice: 'Stock was successfully created.' }
         format.json { render :show, status: :created, location: @stock }
       else
@@ -66,7 +83,7 @@ class StocksController < ApplicationController
 
   def correct_user
     @ticker = Stock.find_by(id: params[:id])
-      redirect_to stocks_path, notice: 'You  not authorised to view/edit this page.' if @ticker.nil?
+      redirect_to stocks_path, notice: 'You are not authorised to view/edit this page.' if @ticker.nil?
   end
 
   private
