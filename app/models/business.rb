@@ -4,4 +4,5 @@ class Business < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
          has_many :stocks
+         belongs_to :admin, required: false
 end
