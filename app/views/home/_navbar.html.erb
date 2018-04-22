@@ -14,12 +14,15 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><%= link_to "About", home_about_path %></li>
+        <% if admin_signed_in? %>
+        <li><%= link_to "Stock list", stocks_path %></li>
+        <li><%= link_to "Add stock", new_stock_path %></li>
+        <li><%= link_to "Sign out", destroy_admin_session_path, method: :delete %></li>
+        <li><%= link_to "Edit profile", edit_admin_registration_path %></li>
+        <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-
         <% if business_signed_in? %>
-        <!-- <li><%= current_business.email %></li> -->
         <li><%= link_to "Stock list", stocks_path %></li>
         <li><%= link_to "Add stock", new_stock_path %></li>
         <li><%= link_to "Sign out", destroy_business_session_path, method: :delete %></li>
@@ -28,6 +31,7 @@
         <li><%= link_to "Sign up", new_business_registration_path %></li>
         <li><%= link_to "Sign in", new_business_session_path %></li>
         <% end %>
+
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
