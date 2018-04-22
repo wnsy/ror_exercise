@@ -11,7 +11,7 @@ module Accessible
       redirect_to(admins_path) && return
     elsif current_business
       flash.clear
-      redirect_to(businesses_path) && return
+      redirect_to(stocks_path) && return
     end
   end
 end

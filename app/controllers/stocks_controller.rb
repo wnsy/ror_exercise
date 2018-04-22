@@ -1,14 +1,14 @@
 class StocksController < ApplicationController
-  before_action :set_stock, only: [:show, :edit, :update, :destroy]
+  before_action :set_stock, :set_price, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :authenticate_business!
   require 'open-uri'
-
 
   # GET /stocks
   # GET /stocks.json
   def index
     @stocks = Stock.all
+
     encoded_url = URI.encode("https://api.iextrading.com/1.0/stock/#{params[:id]}/price")
     if params[:id] == ''
       @empty = 'Must enter a symbol.'
@@ -21,11 +21,17 @@ class StocksController < ApplicationController
         end
       end
     end
+
   end
 
   # GET /stocks/1
   # GET /stocks/1.json
   def show
+    # begin
+    #   @price = Price.find(params[:id])
+    # rescue ActiveRecord::RecordNotFound => e
+    #   @price = nil
+    # end
   end
 
   # GET /stocks/new
@@ -44,9 +50,6 @@ class StocksController < ApplicationController
 
     respond_to do |format|
       if @stock.save
-        new_price = Stock.find_by(params(:price))
-        new_price.update(price: @stock)
-
         format.html { redirect_to @stock, notice: 'Stock was successfully created.' }
         format.json { render :show, status: :created, location: @stock }
       else
@@ -90,6 +93,10 @@ class StocksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_stock
       @stock = Stock.find(params[:id])
+    end
+
+    def set_price
+      @price = Price.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
