@@ -12,18 +12,17 @@
 <% end %>
 
 
-<div class="field">
-  <%= form.label :price %>
-  <%= form.text_field :price, id: :price_price %>
+<div class="form-group">
+  <%= form.label :ticker %>
+  <%= form.text_field :price, id: :price_price, class: "form-control" %>
 </div>
 
-<div class="field">
+<div class="form-group">
   <%= form.text_field :user_id, value: current_business.id, type: :hidden %>
 </div>
 
 
-
 <div class="actions">
-  <%= form.submit %>
+  <%= form.submit "Get the latest price" %>
 </div>
 <% end %>

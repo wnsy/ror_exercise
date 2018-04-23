@@ -1,6 +1,6 @@
 <p>
   <strong>Ticker:</strong>
-  <%= @stock.ticker %>
+  <%= @price.ticker %>
 </p>
 
 
@@ -16,6 +16,12 @@
 
 </table>
 
-
+<%# TODO: button needs to be the right link; repeat the create price based on ticker on that page  %>
+<div class="row">
+  <div class="col-md-8"></div>
+  <div class="col-md-4">
+    <%= link_to 'Get the latest price', new_stock_price_path(@stock), class: "btn btn-primary" %>
+  </div>
+</div>
 <%= link_to 'Edit', edit_stock_path(@stock) %> |
 <%= link_to 'Back', stocks_path %>

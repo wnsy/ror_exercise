@@ -2,15 +2,15 @@
 
 <h1>Prices</h1>
 <div class="form-group">
-	<%= form_tag stocks_path, :method => 'GET' do %>
+	<%= form_tag stock_prices_path, :method => 'GET' do %>
 	<%= text_field_tag 'id', nil,
 	placeholder: 'Enter company ticker symbol', size: 50 %>
 	<%= submit_tag 'Lookup Stock Price', class: 'btn btn-default' %>
 </div>
 <% end %>
-<!-- Display stock price -->
-  <% if @stock %>
-    <%= @stock %>
+<!-- Display price -->
+  <% if @price %>
+    <%= @price %>
   <% elsif @empty %>
     <%= @empty %>
   <% end %>
@@ -39,7 +39,7 @@
         <td><%= price.price %></td>
         <td><%= link_to 'Show', stock_price_path %></td>
         <td><%= link_to 'Edit', edit_price_path(price) %></td>
-        <td><%= link_to 'Destroy', price, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', stock_price, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

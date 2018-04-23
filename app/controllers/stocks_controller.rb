@@ -1,5 +1,5 @@
 class StocksController < ApplicationController
-  before_action :set_stock, :set_price, only: [:show, :edit, :update, :destroy]
+  before_action :set_stock, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
   before_action :authenticate_business!
   require 'open-uri'
@@ -9,29 +9,24 @@ class StocksController < ApplicationController
   def index
     @stocks = Stock.all
 
-    encoded_url = URI.encode("https://api.iextrading.com/1.0/stock/#{params[:id]}/price")
-    if params[:id] == ''
-      @empty = 'Must enter a symbol.'
-    elsif
-      if params[:id]
-        begin
-          @stock = parse_uri(open(URI.parse(encoded_url)).read)
-        rescue StandardError
-          @error = "The stock symbol doesn't exist."
-        end
-      end
-    end
-
+    #
+    # encoded_url = URI.encode("https://api.iextrading.com/1.0/stock/#{params[:id]}/price")
+    # if params[:id] == ''
+    #   @empty = 'Must enter a symbol.'
+    # elsif
+    #   if params[:id]
+    #     begin
+    #       @stock = parse_uri(open(URI.parse(encoded_url)).read)
+    #     rescue StandardError
+    #       @error = "The stock symbol doesn't exist."
+    #     end
+    #   end
+    # end
   end
 
   # GET /stocks/1
   # GET /stocks/1.json
   def show
-    # begin
-    #   @price = Price.find(params[:id])
-    # rescue ActiveRecord::RecordNotFound => e
-    #   @price = nil
-    # end
   end
 
   # GET /stocks/new
@@ -95,9 +90,6 @@ class StocksController < ApplicationController
       @stock = Stock.find(params[:id])
     end
 
-    def set_price
-      @price = Price.find(params[:id])
-    end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stock_params

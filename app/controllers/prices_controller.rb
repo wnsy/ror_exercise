@@ -27,12 +27,12 @@ class PricesController < ApplicationController
   # GET /prices/1
   # GET /prices/1.json
   def show
-    @stock = Stock.find(params[:id])
   end
 
   # GET /prices/new
   def new
     @price = Price.new
+    @stock = Stock.new
   end
 
   # GET /prices/1/edit
@@ -42,7 +42,8 @@ class PricesController < ApplicationController
   # POST /prices
   # POST /prices.json
   def create
-    # @stock = Stock.find(params[:id])
+    @stock = Stock.find(params[:id])
+    @price = @stock.prices.create(price_params)
     @price = Price.new(price_params)
 
     price = open("https://api.iextrading.com/1.0/stock/#{price_params[:ticker]}/price").read
@@ -88,23 +89,6 @@ class PricesController < ApplicationController
     redirect_to stocks_path, notice: 'You are not authorised to view/edit this page.' if @price.nil?
   end
 
-  def get_latest_price #draft
-    @stock = Stock.find(params[:id])
-    @price = Price.new(price_params)
-    price = open("https://api.iextrading.com/1.0/stock/#{price_params[:ticker]}/price").read
-    @price = Price.new(price_params.merge({ticker: price}))
-
-    respond_to do |format|
-      if @price.save
-        format.html { redirect_to @price, notice: 'Price was successfully created.' }
-        format.json { render :show, status: :created, location: @price }
-      else
-        format.html { render :new }
-        format.json { render json: @price.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   private
   # Use callbacks to share common setup or constraints between actions.
   def set_price
@@ -113,6 +97,6 @@ class PricesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def price_params
-    params.require(:price).permit(:price)
+    params.require(:price).permit(:id, :price)
   end
 end
