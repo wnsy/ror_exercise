@@ -9,18 +9,18 @@ class PricesController < ApplicationController
   def index
     @prices = Price.all
 
-    encoded_url = URI.encode("https://api.iextrading.com/1.0/stock/#{params[:id]}/price")
-    if params[:id] == ''
-      @empty = 'Must enter a symbol.'
-    elsif
-      if params[:id]
-        begin
-          @price = parse_uri(open(URI.parse(encoded_url)).read)
-        rescue StandardError
-          @error = "The stock symbol doesn't exist."
-        end
-      end
-    end
+    # encoded_url = URI.encode("https://api.iextrading.com/1.0/stock/#{params[:id]}/price")
+    # if params[:id] == ''
+    #   @empty = 'Must enter a symbol.'
+    # elsif
+    #   if params[:id]
+    #     begin
+    #       @price = parse_uri(open(URI.parse(encoded_url)).read)
+    #     rescue StandardError
+    #       @error = "The stock symbol doesn't exist."
+    #     end
+    #   end
+    # end
 
   end
 
@@ -42,20 +42,26 @@ class PricesController < ApplicationController
   # POST /prices
   # POST /prices.json
   def create
-    @stock = Stock.find(params[:id])
-    @price = @stock.prices.create(price_params)
     @price = Price.new(price_params)
+    @stock = Stock.find(params[:stock_id])
 
-    price = open("https://api.iextrading.com/1.0/stock/#{price_params[:ticker]}/price").read
-    @price = Price.new(price_params.merge({ticker: price}))
+    price = open("https://api.iextrading.com/1.0/stock/#{@stock.ticker}/price").read
+    @price = @stock.prices.create({price: price})
+
+
+    # @price = @stock.prices.create(price_params)
+    # @price = Price.new(price_params)
+    #
+    # price = open("https://api.iextrading.com/1.0/stock/#{price_params[:ticker]}/price").read
+    # @price = Price.new(price_params.merge({ticker: price}))
 
     respond_to do |format|
       if @price.save
-        format.html { redirect_to @price, notice: 'Price was successfully created.' }
-        format.json { render :show, status: :created, location: @price }
+        format.html { redirect_to @stock, notice: 'Latest stock price was successfully created.' }
+        format.json { render :show, status: :created, location: @stock }
       else
         format.html { render :new }
-        format.json { render json: @price.errors, status: :unprocessable_entity }
+        format.json { render json: @stock.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -65,11 +71,11 @@ class PricesController < ApplicationController
   def update
     respond_to do |format|
       if @price.update(price_params)
-        format.html { redirect_to @price, notice: 'Price was successfully updated.' }
-        format.json { render :show, status: :ok, location: @price }
+        format.html { redirect_to @stock, notice: 'Stock was successfully updated.' }
+        format.json { render :show, status: :ok, location: @stock }
       else
         format.html { render :edit }
-        format.json { render json: @price.errors, status: :unprocessable_entity }
+        format.json { render json: @stock.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -79,7 +85,7 @@ class PricesController < ApplicationController
   def destroy
     @price.destroy
     respond_to do |format|
-      format.html { redirect_to prices_url, notice: 'Price was successfully destroyed.' }
+      format.html { redirect_to prices_url, notice: 'Stock was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -97,6 +103,6 @@ class PricesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def price_params
-    params.require(:price).permit(:id, :price)
+    params.require(:price).permit(:price) if params[:price]
   end
 end

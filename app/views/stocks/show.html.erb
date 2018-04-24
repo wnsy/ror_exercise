@@ -1,6 +1,6 @@
 <p>
   <strong>Ticker:</strong>
-  <%= @price.ticker %>
+  <%= @stock.ticker %>
 </p>
 
 
@@ -13,14 +13,20 @@
     </tr>
   </thead>
 
-
+  <tbody>
+    <% @stock.prices.each do |price| %>
+    <tr>
+      <td><%= price.price %></td>
+			<td><%= price.created_at %></td>
+    </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<%# TODO: button needs to be the right link; repeat the create price based on ticker on that page  %>
 <div class="row">
   <div class="col-md-8"></div>
   <div class="col-md-4">
-    <%= link_to 'Get the latest price', new_stock_price_path(@stock), class: "btn btn-primary" %>
+    <%= link_to 'Get the latest price', stock_prices_path(@stock), method: :post, class: "btn btn-primary" %>
   </div>
 </div>
 <%= link_to 'Edit', edit_stock_path(@stock) %> |
