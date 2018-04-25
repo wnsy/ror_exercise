@@ -6,15 +6,23 @@
 </p>
 <% end %>
 
+<ul>
+
+<li><%= link_to 'View business users', businesses_path %></li>
+
+<li><%= link_to 'New Admin', new_admin_path %></li>
+
+<li><%= link_to 'New User', new_business_path %></li>
+</ul>
+
 <p>TODO:<br />
-	- See all stock lists <br />
 	- View a list of all users (admins, business users)<br />
 	- create new users<br />
 </p>
 
-<h1>List of admin users</h1>
+<h1>Admin users</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Email</th>
@@ -32,11 +40,3 @@
 	  </tr>
 	<% end %>
 </table>
-
-
-
-<br>
-
-<%= link_to 'New Admin', new_admin_path %>
-
-<%= link_to 'New User', new_business_path %>

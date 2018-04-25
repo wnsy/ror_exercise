@@ -1,2 +1,21 @@
-<h1>Stock app</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<h1>Check for stock price</h1>
+
+<div class="form-group">
+	<%= form_tag businesses_path, :method => 'GET' do %>
+	<%= text_field_tag 'id', nil,
+	placeholder: 'Enter company ticker symbol', size: 50 %>
+	<%= submit_tag 'Lookup Stock Price', class: 'btn btn-default' %>
+</div>
+<% end %>
+
+<!-- Display stock price -->
+<% if @stock %>
+  <%= @stock %>
+<% elsif @empty %>
+  <%= @empty %>
+<% end %>
+
+<!-- Error handling if stock price doesn't exist  -->
+<% if @error %>
+  <%= @error %>
+<% end %>

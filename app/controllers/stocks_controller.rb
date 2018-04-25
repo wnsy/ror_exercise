@@ -1,6 +1,7 @@
 class StocksController < ApplicationController
   before_action :set_stock, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update, :destroy]
+  before_action :authenticate_admin!, only: [:index, :show]
   before_action :authenticate_business!
   require 'open-uri'
 

@@ -6,9 +6,9 @@ module Accessible
 
   protected
   def check_user
-    if current_admin
+    if current_admin_user
       flash.clear
-      redirect_to(admins_path) && return
+      redirect_to(admin_root_path) && return
     elsif current_business
       flash.clear
       redirect_to(stocks_path) && return

@@ -9,20 +9,6 @@ class PricesController < ApplicationController
   def index
     @prices = Price.all(:order => 'created_at DESC', :limit => 5)
 
-
-    # encoded_url = URI.encode("https://api.iextrading.com/1.0/stock/#{params[:id]}/price")
-    # if params[:id] == ''
-    #   @empty = 'Must enter a symbol.'
-    # elsif
-    #   if params[:id]
-    #     begin
-    #       @price = parse_uri(open(URI.parse(encoded_url)).read)
-    #     rescue StandardError
-    #       @error = "The stock symbol doesn't exist."
-    #     end
-    #   end
-    # end
-
   end
 
   # GET /prices/1
