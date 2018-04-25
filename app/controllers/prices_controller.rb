@@ -7,7 +7,8 @@ class PricesController < ApplicationController
   # GET /prices
   # GET /prices.json
   def index
-    @prices = Price.all
+    @prices = Price.all(:order => 'created_at DESC', :limit => 5)
+
 
     # encoded_url = URI.encode("https://api.iextrading.com/1.0/stock/#{params[:id]}/price")
     # if params[:id] == ''
@@ -47,13 +48,6 @@ class PricesController < ApplicationController
 
     price = open("https://api.iextrading.com/1.0/stock/#{@stock.ticker}/price").read
     @price = @stock.prices.create({price: price})
-
-
-    # @price = @stock.prices.create(price_params)
-    # @price = Price.new(price_params)
-    #
-    # price = open("https://api.iextrading.com/1.0/stock/#{price_params[:ticker]}/price").read
-    # @price = Price.new(price_params.merge({ticker: price}))
 
     respond_to do |format|
       if @price.save

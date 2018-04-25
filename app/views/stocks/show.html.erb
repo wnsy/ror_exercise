@@ -14,7 +14,7 @@
   </thead>
 
   <tbody>
-    <% @stock.prices.each do |price| %>
+    <% @stock.prices.sort_by{|t| - t.created_at.to_i}.first(5).each do |price| %>
     <tr>
       <td><%= price.price %></td>
 			<td><%= price.created_at %></td>

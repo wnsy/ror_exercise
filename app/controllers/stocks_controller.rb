@@ -27,6 +27,7 @@ class StocksController < ApplicationController
   # GET /stocks/1
   # GET /stocks/1.json
   def show
+    @stock = Stock.limit(5).find(params[:id])
   end
 
   # GET /stocks/new
