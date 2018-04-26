@@ -1,21 +1,28 @@
 <h1>Check for stock price</h1>
+<p>Please sign up/sign in to save stock prices to your list. </p>
+	<div class="form-group">
+		<%= form_tag root_path, :method => 'GET' do %>
+		<%= text_field_tag 'id', nil,
+		placeholder: 'Enter company ticker symbol', size: 50, class: "form-control" %>
+	</div>
 
-<div class="form-group">
-	<%= form_tag businesses_path, :method => 'GET' do %>
-	<%= text_field_tag 'id', nil,
-	placeholder: 'Enter company ticker symbol', size: 50 %>
-	<%= submit_tag 'Lookup Stock Price', class: 'btn btn-default' %>
-</div>
-<% end %>
+	<div class="actions">
+		<%= submit_tag 'Lookup Stock Price', class: "btn btn-primary" %>
+	</div>
+	<% end %>
 
-<!-- Display stock price -->
-<% if @stock %>
-  <%= @stock %>
-<% elsif @empty %>
-  <%= @empty %>
-<% end %>
 
-<!-- Error handling if stock price doesn't exist  -->
-<% if @error %>
-  <%= @error %>
-<% end %>
+	<p>
+		<!-- Display stock price -->
+		<% if @stock %>
+		<%= "Price stock is: $" %>
+		  <%= @stock %>
+		<% elsif @empty %>
+		  <%= @empty %>
+		<% end %>
+
+		<!-- Error handling if stock price doesn't exist  -->
+		<% if @error %>
+		  <%= @error %>
+		<% end %>
+	</p>

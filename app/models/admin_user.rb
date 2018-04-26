@@ -9,7 +9,4 @@ class AdminUser < ApplicationRecord
          # making ad admin to be created w/o a password_required
          # after_create sends an email to the registered email address w/ a link
          # to set password
-         def password_required?
-           new_record? ? false : super
-         end
 end

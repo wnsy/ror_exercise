@@ -34,6 +34,10 @@ class PricesController < ApplicationController
 
     price = open("https://api.iextrading.com/1.0/stock/#{@stock.ticker}/price").read
     @price = @stock.prices.create({price: price})
+  # rescue OpenURI::HTTPError => e
+  #   puts e # Error message
+  #   puts e.io.status # Http Error code
+  #   puts e.io.readlines # Http response body
 
     respond_to do |format|
       if @price.save
