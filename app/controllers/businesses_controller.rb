@@ -23,4 +23,10 @@ class BusinessesController < ApplicationController
 	def destroy
 	end
 
-end
+	private
+	# Never trust parameters from the scary internet, only allow the white list through.
+  	def business
+	  	params.require(:business).permit(:email, :password, :password_confirmation)
+  	end
+
+	end
